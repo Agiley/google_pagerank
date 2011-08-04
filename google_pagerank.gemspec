@@ -13,17 +13,20 @@ Gem::Specification.new do |s|
   s.description = %q{API for fetching Google Pagerank}
   s.email = %q{sebastian@agiley.se}
   s.extra_rdoc_files = [
-    "README"
+    "README.rdoc"
   ]
   s.files = [
     ".rspec",
     "Gemfile",
-    "README",
+    "README.rdoc",
     "Rakefile",
     "VERSION",
-    "spec/database.yml.example",
-    "spec/models.rb",
-    "spec/schema.rb",
+    "google_pagerank.gemspec",
+    "lib/google_pagerank.rb",
+    "lib/google_pagerank/client.rb",
+    "lib/google_pagerank/railtie.rb",
+    "lib/tasks/google_pagerank_tasks.rake",
+    "spec/google_pagerank/client_spec.rb",
     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/Agiley/google_pagerank}
