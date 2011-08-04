@@ -5,7 +5,7 @@ Originally based on https://github.com/pioz/pageranker/raw/master/lib/pageranker
 
 == Install
 
-    In your gemfile: gem 'google_pagerank', :git => 'https://github.com/pioz/pageranker.git'
+    In your gemfile: gem 'google_pagerank', :git => 'git://github.com/Agiley/google_pagerank.git'
 
 == Usage
     
