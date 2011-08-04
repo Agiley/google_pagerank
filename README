@@ -1,5 +1,0 @@
-===== Google_Pagerank =====
-
-API for fetching Google Pageranks for sites.
-
-Originally based on https://github.com/pioz/pageranker/raw/master/lib/pageranker.rb, adding support for fetching pagerank using proxies (via the http_utilities-library).

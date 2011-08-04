@@ -1,0 +1,13 @@
+= GooglePagerank
+
+Checks the PageRank for a given website.
+Originally based on https://github.com/pioz/pageranker/raw/master/lib/pageranker.rb, adding support for fetching pagerank using proxies (via the http_utilities-library).
+
+== Install
+
+    In your gemfile: gem 'google_pagerank', :git => 'https://github.com/pioz/pageranker.git'
+
+== Usage
+    
+    client = GooglePagerank::Client.new
+    client.pagerank('http://www.google.com')
