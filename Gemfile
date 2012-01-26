@@ -6,7 +6,7 @@ gem 'http_utilities', :git => 'git://github.com/Agiley/Http-Utilities.git'
 group :development, :test do
   gem 'jeweler'
   gem 'rspec'
-  gem 'rcov'
+  #gem 'rcov'
   gem 'sqlite3'
   
   platforms :ruby do
