@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{google_pagerank}
+  s.name = "google_pagerank"
   s.version = "0.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sebastian Johnsson"]
-  s.date = %q{2011-08-04}
-  s.description = %q{API for fetching Google Pagerank}
-  s.email = %q{sebastian@agiley.se}
+  s.date = "2012-01-26"
+  s.description = "API for fetching Google Pagerank"
+  s.email = "sebastian@agiley.se"
   s.extra_rdoc_files = [
     "README.rdoc"
   ]
@@ -22,17 +22,17 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "google_pagerank.gemspec",
+    "lib/google/pagerank/client.rb",
+    "lib/google/pagerank/railtie.rb",
     "lib/google_pagerank.rb",
-    "lib/google_pagerank/client.rb",
-    "lib/google_pagerank/railtie.rb",
     "lib/tasks/google_pagerank_tasks.rake",
     "spec/google_pagerank/client_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/Agiley/google_pagerank}
+  s.homepage = "http://github.com/Agiley/google_pagerank"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{API for fetching Google Pagerank}
+  s.rubygems_version = "1.8.10"
+  s.summary = "API for fetching Google Pagerank"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
@@ -42,7 +42,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<http_utilities>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<sqlite3>, [">= 0"])
       s.add_development_dependency(%q<mysql2>, ["= 0.2.7"])
     else
@@ -50,7 +49,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<http_utilities>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
-      s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<mysql2>, ["= 0.2.7"])
     end
@@ -59,7 +57,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<http_utilities>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<sqlite3>, [">= 0"])
     s.add_dependency(%q<mysql2>, ["= 0.2.7"])
   end
