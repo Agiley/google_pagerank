@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "google_pagerank"
-  s.version = "0.0.5"
+  s.version = "0.0.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sebastian Johnsson"]
@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
     "VERSION",
     "google_pagerank.gemspec",
     "lib/google/pagerank/client.rb",
-    "lib/google/pagerank/railtie.rb",
     "lib/google_pagerank.rb",
     "lib/tasks/google_pagerank_tasks.rake",
     "spec/google_pagerank/client_spec.rb",
