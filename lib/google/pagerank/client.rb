@@ -65,8 +65,9 @@ module Google
   
       def generate_proxy_options
         proxy_options   =   {}
+        class_exists    =   Module.const_get('Proxy').is_a?(Class) rescue false
         
-        if defined?(::Proxy)
+        if class_exists
           proxy         =   ::Proxy.get_random_proxy(protocol: :http, proxy_type: :private, maximum_failed_attempts: 10)
     
           if (proxy)
