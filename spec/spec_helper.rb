@@ -16,7 +16,6 @@ rescue Bundler::GemNotFound
     "Did you run \`bundlee install\`?"
 end
 
-require "active_record"
 Bundler.require
 
 require File.expand_path('../../lib/google_pagerank', __FILE__)

@@ -6,8 +6,8 @@ describe Google::Pagerank::Client do
       @client = Google::Pagerank::Client.new
     end
         
-    it "should fetch pagerank for google.com" do
-      @client.pagerank('http://www.google.com').should == 9
+    it "should correctly fetch pagerank for google.com" do
+      expect(@client.pagerank('google.com')).to eq(9)
     end
   end
 end

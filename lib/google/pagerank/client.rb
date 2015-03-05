@@ -1,27 +1,82 @@
-# -*- encoding : utf-8 -*-
-require 'open-uri'
-require 'net/http'
-require 'uri'
-require 'cgi'
+require 'faraday'
 
 module Google
   module Pagerank
     class Client
-      attr_accessor :http_client
-
+      attr_accessor :endpoint
+      
+      include Google::Pagerank::Constants
+      
       def initialize
-        self.http_client = HttpUtilities::Http::Client.new
+        self.endpoint       =   "http://toolbarqueries.google.com/tbr"
       end
-
-      def pagerank(url, http_options = {}, fallback_to_proxies = false)
-        url = "http://toolbarqueries.google.com/tbr?client=navclient-auto&ch=#{checksum(url)}&ie=UTF-8&oe=UTF-8&features=Rank&q=info:#{CGI::escape(url)}"
-
-        response = case fallback_to_proxies
-          when true   then self.http_client.retrieve_raw_content_and_fallback_to_proxies(url, http_options)
-          when false  then self.http_client.retrieve_raw_content(url, http_options)
+      
+      def pagerank(url, options = {timeout: 15, open_timeout: 15})
+        arguments           =   {
+          client:     "navclient-auto",
+          ch:         checksum(url),
+          ie:         "UTF-8",
+          oe:         "UTF-8",
+          features:   "Rank",
+          q:          "info:#{CGI::escape(url)}"
+        }
+        
+        response            =   get_response(self.endpoint, arguments, options)
+        
+        return (response && !response.empty? && response =~ /Rank_1:\d:(\d+)/) ? $1.to_i : nil
+      end
+      
+      def get_response(url, arguments = {}, options = {}, retries = 3)
+        response            =   nil
+    
+        begin
+          connection        =   build_connection(options)
+          response          =   connection.get(url, arguments)
+          response          =   (response && response.body) ? response.body : nil
+    
+        rescue Faraday::TimeoutError, Net::ReadTimeout, Timeout::Error, StandardError => e
+          puts "[Google::Pagerank::Client] - #{Time.now.to_s(:db)}: An error occurred while trying to fetch PageRank. Error Class: #{e.class.name}. Error Message: #{e.message}."
+          retries          -=   1
+          retry if retries > 0
         end
 
-        return (response && response.body.present? && response.body =~ /Rank_1:\d:(\d+)/) ? $1.to_i : nil 
+        return response
+      end
+  
+      def build_connection(options = {})
+        options.merge!(ssl: {:verify => false})
+    
+        timeout         =   options.delete(:timeout)            { |opt| 60 }
+        open_timeout    =   options.delete(:open_timeout)       { |opt| 60 }
+
+        proxy_options   =   generate_proxy_options
+        user_agent      =   USER_AGENTS.sample
+    
+        connection      =   Faraday.new(options) do |builder|
+          builder.headers[:user_agent]      =   user_agent
+          builder.options[:timeout]         =   timeout
+          builder.options[:open_timeout]    =   open_timeout        
+          builder.proxy     proxy_options unless proxy_options.empty?
+          builder.adapter   Faraday.default_adapter
+        end
+    
+        return connection
+      end
+  
+      def generate_proxy_options
+        proxy_options   =   {}
+        
+        if defined?(::Proxy)
+          proxy         =   ::Proxy.get_random_proxy(protocol: :http, proxy_type: :private, maximum_failed_attempts: 10)
+    
+          if (proxy)
+            proxy_options[:uri]       =   "http://#{proxy.host}:#{proxy.port}"
+            proxy_options[:user]      =   proxy.username if proxy.username && proxy.username.present?
+            proxy_options[:password]  =   proxy.password if proxy.password && proxy.password.present?
+          end
+        end
+    
+        return proxy_options
       end
 
       def checksum(str)
