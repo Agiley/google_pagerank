@@ -8,30 +8,21 @@ module Google
       include Google::Pagerank::Constants
       
       def initialize
-        self.endpoint       =   "http://toolbarqueries.google.com/tbr"
+        self.endpoint     =   "http://toolbarqueries.google.com/tbr"
       end
       
       def pagerank(url, options: {timeout: 15, open_timeout: 15}, retries: 3)
-        result              =   nil
-        
-        begin
-          arguments         =   {
-            client:     "navclient-auto",
-            ch:         checksum(url),
-            ie:         "UTF-8",
-            oe:         "UTF-8",
-            features:   "Rank",
-            q:          "info:#{CGI::escape(url)}"
-          }
-        
-          response          =   get_response(self.endpoint, arguments, options)
-          result            =   (response && !response.empty? && response =~ /Rank_1:\d:(\d+)/) ? $1.to_i : nil
-          
-        rescue Faraday::TimeoutError, Net::ReadTimeout, Timeout::Error, StandardError => e
-          puts "[Google::Pagerank::Client] - #{Time.now.to_s(:db)}: An error occurred while trying to fetch PageRank. Error Class: #{e.class.name}. Error Message: #{e.message}."
-          retries          -=   1
-          retry if retries > 0
-        end
+        arguments         =   {
+          client:     "navclient-auto",
+          ch:         checksum(url),
+          ie:         "UTF-8",
+          oe:         "UTF-8",
+          features:   "Rank",
+          q:          "info:#{CGI::escape(url)}"
+        }
+      
+        response          =   get_response(self.endpoint, arguments, options)
+        result            =   (response && !response.empty? && response =~ /Rank_1:\d:(\d+)/) ? $1.to_i : nil
 
         return result
       end
